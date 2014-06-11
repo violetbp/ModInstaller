@@ -1,41 +1,30 @@
 package mooklabs.launch;
 
-
-/*
- * ALL
- * HAIL
- * FISHY
- * FISH!!!!!!!
- */
-
-
-
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.Random;
+import java.io.IOException;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 /**
- * 
  * @author mooklabs
  */
-public class GuiWindow extends JPanel {
+public class GuiWindow {
 
-	
-
+	static String nflink = "http://m.simplepie.org/?feed=http%3A%2F%2Fapocalypsead.enjin.com%2Fhome%2Fm%2F23148107%2Frss%2Ftrue";
+	static String nfmplink = "https://gist.githubusercontent.com/mookie1097/2ab755c62a5a6daa47b5/raw/00e7006a957b754185d98ffd4ff7b0ffbb5b2cf1/modpackList";
 
 	/**
 	 * checks to see what button was press and does approprate action
@@ -43,94 +32,191 @@ public class GuiWindow extends JPanel {
 	 * @author mooklabs
 	 */
 	// {{button handleing class
-	private static class ButtonHandler implements ActionListener{
-		
-		
+	private static class ButtonHandler implements ActionListener {
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 			String command = e.getActionCommand();
 			// if clik exit end program
-			if (command.equals("end")) {
+			if (command.equals("exit")) {
 				System.exit(0);
-			} else if (command.equals("guessAgain") ) {
-				
-			} else if (command.equals("guessAgain")){
+			} else if (command.equals("m1")) {
+				infoSP.setViewportView(m1Pane);
+				System.out.println("m1");
 
+			} else if (command.equals("m2")) {
+				infoSP.setViewportView(m2Pane);
+				System.out.println("m2");
+
+			} else if (command.equals("m3")) {
+				infoSP.setViewportView(m3Pane);
+				System.out.println("m3");
+			} else if (command.equals("friend")) {
+				//TODO friend gui and stuff for it to do
+			} else if (command.equals("edit")) {
+				//gui to edit modpack
+			} else if (command.equals("play")) {
+				//avery's job
 			}
 
 		}
 
 	}// }}end button handle class
 
-	
-	// Textbox output
-	static JTextField textInput = new JTextField();
-	static JLabel textOutput = new JLabel();
-
 	// make most stuff global
 	static JFrame window;
 
-	static JButton end = new JButton("Rage Quit");
-	static JButton guessAgain = new JButton("Guess Again");
+	static JPanel sidebarTop = new JPanel();
+	static JPanel sidebarBot = new JPanel();
 
-	
-	//I dont knwo if a panel is needed but it worked with it well
-	static JPanel content = new JPanel();
+	static JEditorPane title = new JEditorPane("", "TitleBar");
+
+	static JPanel packs = new JPanel();
+	static JPanel info = new JPanel();
+	static JScrollPane infoSP = new JScrollPane(info);
+
+	static JEditorPane infoPane;
+
+	static JButton m1 = new JButton("M1");
+	static JButton m2 = new JButton("M2");
+	static JButton m3 = new JButton("M3");
+
+	static JTextPane login = new JTextPane();
+	static JTextPane password = new JTextPane();
+	static JButton loginButton = new JButton("Login");
+
+	static JButton friends = new JButton("Friends");
+	static JButton editPack = new JButton("Edit");
+	static JButton playPack = new JButton("Play");
+
+	static JTextArea m1Pane = new JTextArea("m1");
+	static JTextArea m2Pane = new JTextArea("m1");
+	static JTextArea m3Pane = new JTextArea("m1");
+
+
+
 
 	public static void init() {
-		window = new JFrame("WHEN ARE YOU COMING TO VISIT");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		window = new JFrame("ModLauncher");
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		try {
+			infoPane = new JEditorPane(nflink);
+			infoPane.setAutoscrolls(true);
+		} catch (IOException e) {
+			System.err.println("bad info link");
+		}
+		title.setAlignmentX(title.CENTER_ALIGNMENT);
+		title.setEditable(false);
+
 		// inits the listener
 		ButtonHandler listener = new ButtonHandler();
 
 		// inits buttons
 
 		// button listeners
-		end.addActionListener(listener);
-		guessAgain.addActionListener(listener);
+		m1.addActionListener(listener);
+		m2.addActionListener(listener);
+		m3.addActionListener(listener);
+		friends.addActionListener(listener);
+		editPack.addActionListener(listener);
+		playPack.addActionListener(listener);
+
+
 
 		// action commands --- string passed to action listener to deside what to do
-		end.setActionCommand("end");
-		guessAgain.setActionCommand("guessAgain");
+		m1.setActionCommand("m1");
+		m2.setActionCommand("m2");
+		m3.setActionCommand("m3");
+		friends.setActionCommand("friends");
+		editPack.setActionCommand("edit");
+		playPack.setActionCommand("play");
 
 
-		// idk
-		content.setLayout(new GridBagLayout());
+		// layouts
+		window.setLayout(new GridBagLayout());
+		info.setLayout(new BorderLayout());
 
-		
-		textInput.setMinimumSize(new Dimension(10,20));
-		
-		content.add(textOutput, constrain(0,0,c.ABOVE_BASELINE));		
-		
-		//content.add(end, constrain(0,1,c.SOUTHWEST));
-		//content.add(guessAgain, constrain(1,1,c.SOUTHEAST));
-		
-		c.ipadx = 70;
-		//content.add(textInput, constrain(1,0,c.BELOW_BASELINE));
+		c.weightx = 0;
+		c.weighty = .1;
+
+		sidebar();
+
+		buttons();
+		info.add(title);
+		info.add(infoPane);
+		infoSP.setViewportView(info);// scroling
+
+		window.add(sidebarTop, constrain(0, 0, 1, c.RELATIVE, c.NORTHWEST));
+		window.add(sidebarBot, constrain(0, 1, 1, c.REMAINDER, c.SOUTHWEST));
+		c.fill = c.BOTH;
+
+		c.weightx = 1;
+		c.weighty = 1;
+
+		c.insets = new Insets(0, 5, 0, 0);
+		window.add(infoSP, constrain(1, 0, 2, 2, c.NORTHEAST));
+		c.weighty = 0;
+
+		c.insets = new Insets(0, 0, 0, 0);
+
+		// will make packs go to far left
+		c.fill = c.NONE;
+		window.add(packs, constrain(1, 3, c.REMAINDER, c.REMAINDER, c.SOUTHWEST));
 
 		// creates the gui, kinda really importaint
-		window.setContentPane(content);
 		window.setSize(400, 300);
 		window.setLocation(400, 400);
-		//window.setCursor(Cursor.WAIT_CURSOR);
 		window.setVisible(true);// make it visible
 
-		// /stuff i just added
-		textOutput.setText("WHEN ARE YOU COMING TO VISIT?");
-		
-		//content.setForeground()
-		window.getRootPane().setDefaultButton(guessAgain);
+		info.setSize(infoSP.getSize());
+
+		// window.getRootPane().setDefaultButton(guessAgain);
 
 	}
+
 	static GridBagConstraints c = new GridBagConstraints();
-	
-	public static GridBagConstraints constrain(int row, int col,int cons) {
+
+	public static GridBagConstraints constrain(int row, int col, int cons) {
 		c.gridx = row;
 		c.gridy = col;
+		c.gridwidth = 1;
+		c.gridheight = 1;
 		c.anchor = cons;
 		return c;
+	}
+
+	public static GridBagConstraints constrain(int row, int col, int wid, int hei, int cons) {
+		c.gridx = row;
+		c.gridy = col;
+		c.gridwidth = wid;
+		c.gridheight = hei;
+		c.anchor = cons;
+		return c;
+	}
+
+	static ButtonGroup buttons() {
+		ButtonGroup b = new ButtonGroup();
+		b.add(m1);
+		b.add(m2);
+		b.add(m3);
+		packs.add(m1);
+		packs.add(m2);
+		packs.add(m3);
+		return b;
+	}
+
+	static void sidebar() {
+		sidebarTop.setLayout(new GridLayout(3, 1, 1, 3));
+		sidebarBot.setLayout(new GridLayout(3, 1, 1, 3));
+		sidebarTop.add(login);
+		sidebarTop.add(password);
+		sidebarTop.add(loginButton);
+
+		sidebarBot.add(friends);
+		sidebarBot.add(editPack);
+		sidebarBot.add(playPack);
 	}
 
 }
