@@ -3,13 +3,14 @@ package mooklabs.rss;
 /*
  * Represents one RSS message
  */
-public class FeedMessage {
+public class ModFeedMessage {
 
-	String title;
-	String description;
-	String link;
-	String author;
-	String guid;
+	public String title;
+	public String description;
+	public String link;
+	public String author;
+	public String version;
+	public String picLink;
 
 	public String getTitle() {
 		return title;
@@ -43,19 +44,10 @@ public class FeedMessage {
 		this.author = author;
 	}
 
-	public String getGuid() {
-		return guid;
-	}
-
-	public void setGuid(String guid) {
-		this.guid = guid;
-	}
-
 	@Override
 	public String toString() {
-		return "FeedMessage [title=" + title + ", description=" + description
-				+ ", link=" + link + ", author=" + author + ", guid=" + guid
-				+ "]";
+		return "Modpack [name=" + title + ", description=" + description
+				+ ", author=" + author+ ", version=" + version + ", link=" + link + "]";
 	}
 
 }
