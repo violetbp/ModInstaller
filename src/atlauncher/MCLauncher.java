@@ -181,11 +181,17 @@ public class MCLauncher {
 		argsString = argsString.replace(LastLogin.ACCESS_TOKEN, "REDACTED");
 		argsString = argsString.replace(LastLogin.getSession(), "REDACTED");
 		argsString = argsString.replace(props, "REDACTED");*/
-
+		System.out.println(arguments);
+		arguments.clear();
+		System.out.println(arguments);
+		arguments.add("/usr/bin/java");
+		arguments.add("-jar");
+		arguments.add("TechnicLauncher.jar");
 		System.err.println("Launching Minecraft with the following arguments " + "(user related stuff has been removed): " + argsString);
 		ProcessBuilder processBuilder = new ProcessBuilder(arguments);
 		processBuilder.directory(instance.getRootDirectory());
 		processBuilder.redirectErrorStream(true);
+
 		return processBuilder.start();
 	}
 }

@@ -165,7 +165,7 @@ public class Modpack {
 	}
 
 	public File getRootDirectory() {
-		return new File(Utils.getMinecraftFolder(), "/"+this.name);
+		return Utils.getMinecraftFolder();
 	}
 
 	public String getMainClass() {

@@ -7,12 +7,12 @@ import openl.Utils;
 
 public class Settings {
 
-	public static String getWindowWidth() {
-		return null;
+	public static int getWindowWidth() {
+		return 500;
 	}
 
-	public static String getWindowHeight() {
-		return null;
+	public static int getWindowHeight() {
+		return 500;
 	}
 
 	public static String getForgeLoggingLevel() {
