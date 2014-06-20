@@ -4,12 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import mooklabs.Settings;
 import openl.LastLogin;
 import openl.Modpack;
 import openl.Utils;
+
+import com.google.gson.Gson;
 
 public class MCLauncher {
 
@@ -122,7 +126,7 @@ public class MCLauncher {
 		arguments.add("-cp");
 		arguments.add(System.getProperty("java.class.path") + cpb.toString());
 		arguments.add(instance.getMainClass());
-		String props = "";//CRIT new Gson().toJson((LastLogin.getUser() == null ? new HashMap<String, Collection<String>>() : LastLogin.getProperties()));
+		String props = new Gson().toJson((LastLogin.username == null ? new HashMap<String, Collection<String>>() : LastLogin.getProperties()));
 		if (instance.hasMinecraftArguments()) {
 			String[] minecraftArguments = instance.getMinecraftArguments().split(" ");
 			for (String argument : minecraftArguments) {
@@ -137,7 +141,7 @@ public class MCLauncher {
 				argument = argument.replace("${auth_uuid}", LastLogin.UUID);
 				argument = argument.replace("${auth_access_token}", LastLogin.ACCESS_TOKEN);
 				argument = argument.replace("${auth_session}", LastLogin.getSession());
-				//				argument = argument.replace("${user_type}", (LastLogin.getSelectedProfile().isLegacy() ? UserType.LEGACY.getName() : UserType.MOJANG.getName()));
+				argument = argument.replace("${user_type}", (LastLogin.legacy ? "legacy" : "mojang"));
 				arguments.add(argument);
 			}
 		} else {

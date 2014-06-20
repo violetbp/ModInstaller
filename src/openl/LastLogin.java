@@ -18,7 +18,7 @@ public class LastLogin {
 	public static String ACCESS_TOKEN = "";
 	public static String CLIENT_TOKEN = "";
 	public static String username = "";
-
+	public static boolean legacy;
 
 	public static void tryLoading(){
 		File f = new File(Utils.getWorkingDirectory(), "lastLogin.dat");
@@ -112,7 +112,7 @@ public class LastLogin {
 		return "token:" + ACCESS_TOKEN + ":" + UUID;
 	}
 
-	public HashMap<String, Collection<String>> getProperties() {
+	public static HashMap<String, Collection<String>> getProperties() {
 		return null;
 	}
 

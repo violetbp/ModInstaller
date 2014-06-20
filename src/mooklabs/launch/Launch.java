@@ -48,6 +48,8 @@ public class Launch {
 			LastLogin.CLIENT_TOKEN = data.get("clientToken");
 			LastLogin.UUID = data.get("UUID");
 			Account.username = data.get("username");
+			LastLogin.username = data.get("username");
+			LastLogin.legacy = data.get("loginName").equals(data.get("username"));
 			System.out.println("Your UUID is " + LastLogin.UUID + " in case you wanted to know!");
 		} catch (Exception e) {
 		}
