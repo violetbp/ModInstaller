@@ -1,7 +1,8 @@
 package mooklabs;
 
 import java.io.File;
-import java.util.ArrayList;
+
+import openl.Utils;
 
 
 public class Settings {
@@ -11,10 +12,6 @@ public class Settings {
 	}
 
 	public static String getWindowHeight() {
-		return null;
-	}
-
-	public static ArrayList<String> getJavaParameters() {
 		return null;
 	}
 
@@ -31,13 +28,20 @@ public class Settings {
 	}
 
 	public static File getResourcesDir() {
-		// TODO Auto-generated method stub
-		return null;
+		return new File(Utils.getMinecraftFolder(), "/assets");
 	}
 
 	public static boolean startMinecraftMaximised() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public static int getPermGen() {
+		return 128;
+	}
+
+	public static String getJavaParameters() {
+		return "";
 	}
 
 

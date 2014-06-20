@@ -60,7 +60,10 @@ public class Utils {
 	}
 	public static boolean isWindows() {
 		return getPlatform() == OS.WINDOWS;
+	}public static boolean isMac() {
+		return getPlatform() == OS.MACOS;
 	}
+
 	public static File getInstancesFolder() {
 		return new File(getWorkingDirectory(), "instances/");
 	}
@@ -125,5 +128,11 @@ public class Utils {
 		return 10000;
 	}
 
+	/**TODO bit iffy may want to revise before people start using it
+	 * @return
+	 */
+	public static boolean isJava8(){
+		return System.getProperty("java.version").substring(0, 3).equalsIgnoreCase("1.8");
+	}
 
 }

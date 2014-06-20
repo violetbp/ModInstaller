@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
 import mooklabs.rss.ReadXMLFromURl;
+import atlauncher.MCLauncher;
 
 /**
  * @author mooklabs
@@ -57,7 +58,11 @@ public class GuiWindow {
 			} else if (command.equals("edit")) {
 				//gui to edit modpack
 			} else if (command.equals("play")) {
-				//avery's job
+				try {
+					MCLauncher.launch(Launch.modpacks.get(0));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}else if (command.equals("login")) {
 				Launch.login();
 			}

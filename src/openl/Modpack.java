@@ -34,6 +34,7 @@ public class Modpack {
 	public String toString() {
 		return "{id=" + id + ";name=" + name + ";hasLogo=" + (logo != null) + ";private=" + isPrivate + (isPrivate ? (";unlocked=" + unlocked) : "") + ";author=" + author + ";version=" + version + ";versionString=" + versionString + ";mcversion=" + mcVersion + "}";
 	}
+
 	public Modpack(String id, String name, URL logo, String author, boolean isPrivate, int version, String versionString, String mcVersion, String serverID, String link) {
 		this(id,name,logo,author,isPrivate,version,versionString,mcVersion,serverID);
 		this.link = link;
@@ -78,22 +79,6 @@ public class Modpack {
 		return logo;
 	}
 
-	public boolean isPublic() {
-		return !isPrivate;
-	}
-
-	public boolean isPrivate(){
-		return isPrivate;
-	}
-
-	public void unlock() {
-		this.unlocked = true;
-	}
-
-	public boolean isUnlocked() {
-		return unlocked;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -102,7 +87,7 @@ public class Modpack {
 		this.description = desc;
 	}
 
-	public void setCreator(String creator) {
+	public void setAuthor(String creator) {
 		this.author = creator;
 	}
 
@@ -154,9 +139,51 @@ public class Modpack {
 	public Object getMinecraftJar() {
 		return new File(Utils.getMinecraftFolder(), "minecraft.jar");
 	}
-	public String getPermGen() {
-		// TODO Auto-generated method stub
+
+	public int getPermGen() {
+		return 128;
+	}
+
+	public boolean hasExtraArguments() {
+		return getExtraArguments()!=null && !getExtraArguments().equals("");
+	}
+
+	public String getExtraArguments() {
 		return null;
 	}
+
+	public boolean hasMinecraftArguments() {
+		return getMinecraftArguments()!=null && !getMinecraftArguments().equals("");
+	}
+
+	public String getMinecraftArguments() {
+		return null;
+	}
+
+	public File getAssetsDir() {
+		return new File(getRootDirectory(), "/assets");
+	}
+
+	public File getRootDirectory() {
+		return new File(Utils.getMinecraftFolder(), "/"+this.name);
+	}
+
+	public String getMainClass() {
+		return null;
+	}
+
+	public File getJarModsDirectory() {
+		return new File(Utils.getMinecraftFolder(), "/jarmods");
+
+	}
+
+	public boolean hasJarMods() {
+		return false;
+	}
+
+	public String getJarOrder() {
+		return null;
+	}
+
 
 }

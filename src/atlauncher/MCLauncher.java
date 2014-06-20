@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.logging.LogManager;
 
 import mooklabs.Settings;
 import openl.LastLogin;
@@ -16,7 +13,7 @@ import openl.Utils;
 
 public class MCLauncher {
 
-	public static Process launch(Modpack instance, LastLogin response) throws IOException {
+	public static Process launch(Modpack instance) throws IOException {
 
 		StringBuilder cpb = new StringBuilder("");
 
@@ -46,10 +43,10 @@ public class MCLauncher {
 			}
 		}
 
-		for (String jarFile : instance.getLibrariesNeeded().split(",")) {
+		/*CRIT for (String jarFile : instance.getLibrariesNeeded().split(",")) {
 			cpb.append(File.pathSeparator);
 			cpb.append(new File(instance.getBinDirectory(), jarFile));
-		}
+		}*/
 
 		cpb.append(File.pathSeparator);
 		cpb.append(instance.getMinecraftJar());
@@ -110,7 +107,7 @@ public class MCLauncher {
 				if (!arg.isEmpty()) {
 					if (instance.hasExtraArguments()) {
 						if (instance.getExtraArguments().contains(arg)) {
-							LogManager.error("Duplicate argument " + arg + " found and not added!");
+							System.err.println("Duplicate argument " + arg + " found and not added!");
 						} else {
 							arguments.add(arg);
 						}
@@ -121,38 +118,38 @@ public class MCLauncher {
 			}
 		}
 
-		arguments.add("-Djava.library.path=" + instance.getNativesDirectory().getAbsolutePath());
+		//CRIT arguments.add("-Djava.library.path=" + instance.getNativesDirectory().getAbsolutePath());
 		arguments.add("-cp");
 		arguments.add(System.getProperty("java.class.path") + cpb.toString());
 		arguments.add(instance.getMainClass());
-		String props = new Gson().toJson((response.getUser() == null ? new HashMap<String, Collection<String>>() : response.getProperties()));
+		String props = "";//CRIT new Gson().toJson((LastLogin.getUser() == null ? new HashMap<String, Collection<String>>() : LastLogin.getProperties()));
 		if (instance.hasMinecraftArguments()) {
 			String[] minecraftArguments = instance.getMinecraftArguments().split(" ");
 			for (String argument : minecraftArguments) {
-				argument = argument.replace("${auth_player_name}", response.getSelectedProfile().getName());
+				argument = argument.replace("${auth_player_name}", LastLogin.username);
 				argument = argument.replace("${profile_name}", instance.getName());
 				argument = argument.replace("${user_properties}", props);
-				argument = argument.replace("${version_name}", instance.getMinecraftVersion());
+				argument = argument.replace("${version_name}", instance.getMcVersion());
 				argument = argument.replace("${game_directory}", instance.getRootDirectory().getAbsolutePath());
 				argument = argument.replace("${game_assets}", instance.getAssetsDir().getAbsolutePath());
 				argument = argument.replace("${assets_root}", Settings.getResourcesDir().getAbsolutePath());
-				argument = argument.replace("${assets_index_name}", instance.getAssets());
-				argument = argument.replace("${auth_uuid}", response.getSelectedProfile().getId());
-				argument = argument.replace("${auth_access_token}", response.getAccessToken());
-				argument = argument.replace("${auth_session}", response.getSession());
-				argument = argument.replace("${user_type}", (response.getSelectedProfile().isLegacy() ? UserType.LEGACY.getName() : UserType.MOJANG.getName()));
+				//CRIT		argument = argument.replace("${assets_index_name}", instance.getAssets());
+				argument = argument.replace("${auth_uuid}", LastLogin.UUID);
+				argument = argument.replace("${auth_access_token}", LastLogin.ACCESS_TOKEN);
+				argument = argument.replace("${auth_session}", LastLogin.getSession());
+				//				argument = argument.replace("${user_type}", (LastLogin.getSelectedProfile().isLegacy() ? UserType.LEGACY.getName() : UserType.MOJANG.getName()));
 				arguments.add(argument);
 			}
 		} else {
-			arguments.add("--username=" + response.username);
-			arguments.add("--session=" + response.getSession());
+			arguments.add("--username=" + LastLogin.username);
+			arguments.add("--session=" + LastLogin.getSession());
 
 			// This is for 1.7
-			arguments.add("--accessToken=" + response.ACCESS_TOKEN);
-			arguments.add("--uuid=" + response.UUID);
+			arguments.add("--accessToken=" + LastLogin.ACCESS_TOKEN);
+			arguments.add("--uuid=" + LastLogin.UUID);
 			// End of stuff for 1.7
 
-			arguments.add("--version=" + instance.getMinecraftVersion());
+			arguments.add("--version=" + instance.getMcVersion());
 			arguments.add("--gameDir=" + instance.getRootDirectory().getAbsolutePath());
 			arguments.add("--assetsDir=" + Settings.getResourcesDir().getAbsolutePath());
 		}
@@ -175,13 +172,13 @@ public class MCLauncher {
 		}
 
 		String argsString = arguments.toString();
-		argsString = argsString.replace(response.getSelectedProfile().getName(), "REDACTED");
-		argsString = argsString.replace(response.getSelectedProfile().getId(), "REDACTED");
-		argsString = argsString.replace(response.getAccessToken(), "REDACTED");
-		argsString = argsString.replace(response.getSession(), "REDACTED");
-		argsString = argsString.replace(props, "REDACTED");
+		/*argsString = argsString.replace(LastLogin.username, "REDACTED");
+		argsString = argsString.replace(LastLogin.UUID, "REDACTED");
+		argsString = argsString.replace(LastLogin.ACCESS_TOKEN, "REDACTED");
+		argsString = argsString.replace(LastLogin.getSession(), "REDACTED");
+		argsString = argsString.replace(props, "REDACTED");*/
 
-		LogManager.info("Launching Minecraft with the following arguments " + "(user related stuff has been removed): " + argsString);
+		System.err.println("Launching Minecraft with the following arguments " + "(user related stuff has been removed): " + argsString);
 		ProcessBuilder processBuilder = new ProcessBuilder(arguments);
 		processBuilder.directory(instance.getRootDirectory());
 		processBuilder.redirectErrorStream(true);

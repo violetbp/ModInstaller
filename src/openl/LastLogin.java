@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.HashMap;
 
 import mooklabs.auth.Account;
 import mooklabs.auth.MojangAuth;
@@ -106,8 +108,12 @@ public class LastLogin {
 			f.createNewFile();
 		}catch(Exception e){}
 	}
-	public String getSession() {
+	public static String getSession() {
 		return "token:" + ACCESS_TOKEN + ":" + UUID;
+	}
+
+	public HashMap<String, Collection<String>> getProperties() {
+		return null;
 	}
 
 }
