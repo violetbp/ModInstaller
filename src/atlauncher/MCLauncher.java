@@ -47,10 +47,10 @@ public class MCLauncher {
 			}
 		}
 
-		/*CRIT for (String jarFile : instance.getLibrariesNeeded().split(",")) {
+		for (String jarFile : instance.getLibrariesNeeded().split(",")) {
 			cpb.append(File.pathSeparator);
 			cpb.append(new File(instance.getBinDirectory(), jarFile));
-		}*/
+		}
 
 		cpb.append(File.pathSeparator);
 		cpb.append(instance.getMinecraftJar());
@@ -122,7 +122,7 @@ public class MCLauncher {
 			}
 		}
 
-		//CRIT arguments.add("-Djava.library.path=" + instance.getNativesDirectory().getAbsolutePath());
+		arguments.add("-Djava.library.path=" + instance.getNativesDirectory().getAbsolutePath());
 		arguments.add("-cp");
 		arguments.add(System.getProperty("java.class.path") + cpb.toString());
 		arguments.add(instance.getMainClass());
@@ -137,7 +137,7 @@ public class MCLauncher {
 				argument = argument.replace("${game_directory}", instance.getRootDirectory().getAbsolutePath());
 				argument = argument.replace("${game_assets}", instance.getAssetsDir().getAbsolutePath());
 				argument = argument.replace("${assets_root}", Settings.getResourcesDir().getAbsolutePath());
-				//CRIT		argument = argument.replace("${assets_index_name}", instance.getAssets());
+				//argument = argument.replace("${assets_index_name}", instance.getAssets());
 				argument = argument.replace("${auth_uuid}", LastLogin.UUID);
 				argument = argument.replace("${auth_access_token}", LastLogin.ACCESS_TOKEN);
 				argument = argument.replace("${auth_session}", LastLogin.getSession());
@@ -181,17 +181,22 @@ public class MCLauncher {
 		argsString = argsString.replace(LastLogin.ACCESS_TOKEN, "REDACTED");
 		argsString = argsString.replace(LastLogin.getSession(), "REDACTED");
 		argsString = argsString.replace(props, "REDACTED");*/
-		System.out.println(arguments);
+
+		//Testing-opens technic
+		/*System.out.println(arguments);
 		arguments.clear();
 		System.out.println(arguments);
 		arguments.add("/usr/bin/java");
 		arguments.add("-jar");
-		arguments.add("TechnicLauncher.jar");
-		System.err.println("Launching Minecraft with the following arguments " + "(user related stuff has been removed): " + argsString);
+		arguments.add("/home/victor/NightfallLauncher/minecrafts/minecraft.jar");
+		//argsString = arguments.toString();*/
+
+
+		System.err.println("\nLaunching Minecraft with the following arguments " + "(user related stuff has been removed): " + argsString);
+		//System.err.println(argsString.replace(',', ' '));
 		ProcessBuilder processBuilder = new ProcessBuilder(arguments);
 		processBuilder.directory(instance.getRootDirectory());
 		processBuilder.redirectErrorStream(true);
-
 		return processBuilder.start();
 	}
 }

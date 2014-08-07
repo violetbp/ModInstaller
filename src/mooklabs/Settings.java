@@ -20,7 +20,7 @@ public class Settings {
 	}
 
 	public static String getJavaPath() {
-		return null;
+		return "/usr";
 	}
 
 	public static int getMemory() {

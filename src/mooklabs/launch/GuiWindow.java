@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -58,11 +59,13 @@ public class GuiWindow {
 			} else if (command.equals("edit")) {
 				//gui to edit modpack
 			} else if (command.equals("play")) {
+
 				try {
 					MCLauncher.launch(Launch.modpacks.get(0));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+
 			}else if (command.equals("login")) {
 				Launch.login();
 			}
@@ -85,9 +88,14 @@ public class GuiWindow {
 
 	public static JEditorPane infoPane;
 
-	public static JButton m1 = new JButton("M1");
-	public static JButton m2 = new JButton("M2");
-	public static JButton m3 = new JButton("M3");
+	public static JButton m1 = new JButton("NausicaaMod");
+	public static JButton m2 = new JButton("NightfallRedux");
+	public static JButton m3 = new JButton("Nightfall2018");
+	public static ArrayList<JButton> modpackButtons = new ArrayList<>();
+	{
+		modpackButtons.add(m1);modpackButtons.add(m2);modpackButtons.add(m3);
+	}
+
 
 	public static JTextPane username = new JTextPane();
 	public static JTextPane password = new JTextPane();

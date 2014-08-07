@@ -50,7 +50,7 @@ public class LastLogin {
 					throw new Exception();
 
 				Account.username = br.readLine();
-				username = br.readLine();
+				username = Account.username;
 				if(MojangAuth.isValid(ACCESS_TOKEN)){
 					System.out.println("Logged in!");
 					Launch.setLoggedIn();

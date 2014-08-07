@@ -51,7 +51,7 @@ public class Modpack {
 		this.isPrivate = isPrivate;
 		this.version = version;
 		this.versionString = versionString;
-		this.mcVersion = mcVersion;
+		//TODO this.mcVersion = mcVersion;
 		this.serverID = serverID;
 		downloaded = new File(Utils.getInstancesFolder(), serverID + "_" + id + "/pack.json").exists();
 
@@ -169,11 +169,11 @@ public class Modpack {
 	}
 
 	public String getMainClass() {
-		return null;
+		return "net.minecraft.launchwrapper.Launch";
 	}
 
 	public File getJarModsDirectory() {
-		return new File(Utils.getMinecraftFolder(), "/jarmods");
+		return new File(getRootDirectory(), "/jarmods");
 
 	}
 
@@ -183,6 +183,20 @@ public class Modpack {
 
 	public String getJarOrder() {
 		return null;
+	}
+
+	public String getBinDirectory() {
+		return getRootDirectory().getAbsolutePath()+"/bin";
+	}
+
+	public String getLibrariesNeeded() {
+
+		return "net.minecraftforge:minecraftforge:9.11.1.965,net.minecraft:launchwrapper:1.8," +
+				"org.ow2.asm:asm-all:4.1,org.scala-lang:scala-library:2.10.2,org.scala-lang:scala-compiler:2.10.2,lzma:lzma:0.0.1";
+	}
+
+	public File getNativesDirectory() {
+		return new File(getRootDirectory().getAbsolutePath(),"/natives");
 	}
 
 
